@@ -1,0 +1,270 @@
+<html>
+  <head>
+    <style>
+
+    /* GOOGLE COLOR CHART Ordered as they are used on legend and coloraxis categories
+    Blue:#4285f4;
+    Green:#34a853;
+    Yellow:#fbbc05;
+    Red:#ea4335;
+    darkblue:#5c6bc0;
+    Purple:#aa47bc;
+    Dark Green:#00796a;
+    */
+
+    body{
+          width: 800px;
+          margin: auto;
+          margin-top: 50px;
+    }
+
+    /* Contains map. Useful for asigning relative attribute to logo and legends, so they are able flow inside the map if the text varies in the header */
+    .map_container {
+          position: relative;
+    }
+
+    /*Header Container */
+    #header {
+          padding-left: 50px;
+          padding-bottom: 10px;
+          
+    }
+
+    /*Main text in header*/
+
+    h1.title {
+          font-family: 'Roboto condensed', sans-serif; 
+          font-size: 33px;
+          margin-bottom: 0px !important;
+          line-height: 37px;
+          display: inline;
+          color: #58595b;
+          text-transform: uppercase;
+    }
+
+    /*Gray text in header*/
+    h2.subtitle {
+          font-family: 'Roboto', sans-serif;; 
+          font-size: 25px;
+          margin-bottom: 0px !important;
+          line-height: 37px;
+          display: inline;
+          color:gray;
+          font-weight: 400;
+          padding-left: 10px;
+          
+    }
+
+    /* colors for every header element*/
+
+    .title1 {
+      color:#4285f4;
+    }
+
+    .title2{
+      color:#34a853;
+    }
+
+    .title3{
+      color:#fbbc05;
+    }
+
+    .title4{
+      color:#ea4335;
+   
+    }
+
+    /*Legend box and colors for every legend*/
+
+    .box {
+         width:20px;
+         height:20px;
+         left:0px;
+         position:relative;
+    }
+
+    .box1{
+      
+      background-color:#4285f4;
+      display: inline-block;
+    }
+
+    .box2 {
+      background-color: #34a853;
+      display: inline-block;
+    }
+
+    .box3 {
+      background-color: #fbbc05;
+      display: inline-block;
+    }
+
+    .box4 {
+      background-color: #ea4335;
+      display: inline-block;
+    }
+
+    .box5 {
+      background-color: #5c6bc0;
+      display: inline-block;
+    }
+
+    .box6 {
+      background-color: #aa47bc;
+      display: inline-block;
+    }
+
+    .box7 {
+      background-color: #00796a;
+      display: inline-block;
+    }
+
+
+
+  /*Position of legend. Position of legend. Adjust top position to sit on the chart according to the number of categories you have*/
+
+    #legend {
+        position:absolute;
+        top: 224px;
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.6);
+        padding-right: 20px;
+        padding-bottom: 15px;
+        padding-left: 15px;
+      }
+
+    /*Text of legend*/
+    #legend p {
+                font-family: 'Roboto', sans-serif; 
+                font-size: 14px;
+                margin-bottom: 0px !important;
+                line-height: 20px;
+                display: inline-block;
+                padding-left: 10px;
+      }
+
+    /*Position of trends logo. Pick the right ID depending of where you want to position the logo*/
+      #trends_logo_top {
+           height: 100px;
+           position: absolute;
+           left:567px;
+           top:38px;
+     }
+
+      #trends_logo_bottom {
+            height: 100px;
+           position: absolute;
+            /* chartArea left */
+           left:567px;
+           top:392px;
+     }
+
+     #chart_div path{
+      stroke-width:1; /* control the countries borders width */
+      stroke:white; /* choose a color for the border */
+      border: 20px;
+}
+
+
+   </style>
+
+
+    <meta charset="utf-8">
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+
+    <script type='text/javascript'>
+     google.load('visualization', '1', {'packages': ['geochart']});
+     google.setOnLoadCallback(drawMarkersMap);
+
+
+     /* Every category must be tought as a number from 1 to 7(or more) 
+
+     Spreadsheet with examples for easy data formatting 
+      
+     */
+
+      function drawMarkersMap() {
+      var data = google.visualization.arrayToDataTable([
+        ['State',   'Search Interest'],
+        ['Île-de-France',1],
+        ['Bretagne',2],
+        ['Rhône-Alpes',1],
+        ['Aquitaine',2],
+        ['Pays de la Loire',2],
+        ['Alsace',1],
+        ['Provence-Alpes-Côte-d\'Azur',1],
+        ['Poitou-Charentes',3],
+        ['Nord-Pas-de-Calais',1],
+        ['Basse-Normandie',3],
+        ['Midi-Pyrénées',1],
+        ['Auvergne',1],
+        ['Centre',1],
+        ['Bourgogne',1],
+        ['Languedoc-Roussillon',1],
+        ['Limousin',1],
+        ['Champagne-Ardenne',1],
+        ['Haute-Normandie',1],
+        ['Lorraine',1],
+        ['Franche-Comté',1],
+        ['Picardie',1],
+        ['Corse',1],
+        
+      ]);
+
+      /* Options for defining the API configuration: country and resolution. Legend is off by default for categorical maps. For more info about all the options visit https://developers.google.com/chart/interactive/docs/gallery/geochart */
+
+      var options = {
+        region: '021',
+        displayMode: ['region', 'marker'], 
+        colorAxis: {colors: ['#4285f4', '#34a853','#fbbc05']}, /* Colors for categorical maps. Only assing the colors that are actually displayed on the map. The first color must be your lowest categorical value and so on */
+        resolution: 'countries',
+        legend: 'false',
+        backgroundColor: {stroke: ['#00796a']}
+
+      };
+
+      /*Color in order from category 1 to 7
+
+       '#4285f4', '#34a853','#fbbc05', '#ea4335', '#5c6bc0', '#aa47bc', '#00796a']  */
+
+
+
+
+      var formatter = new google.visualization.NumberFormat(
+      {negativeColor: 'red', negativeParens: true, fractionDigits: 0});
+      formatter.format(data, 1); // Apply formatter to second column
+
+      var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    };
+    </script>
+  </head>
+  <body>
+      
+        <!--Header = Header text. Span class gives colors to header elements-->
+          <div id="header">
+            <h1 class="title">Les <span class="Title1">sujets politiques</span> les plus recherchés <br /> par région
+            <h2 class="subtitle">Depuis le premier débat des Républicains</h2>
+          </div>
+
+        <!--The map container allows the logo and legend to flow with the map, no matter how much lines are in the header -->
+          <div class="map_container">
+            <div id="chart_div" style="width: 800px; height: 500px;"></div>
+            <div id="trends_logo_top">
+                <img src="https://github.com/GoogleTrends/visualassets/blob/master/lockup_trends_color_200x36dp.png?raw=true">
+            </div>
+
+        <!-- This divs controls the text shown on the legend box -->
+            <div id="legend">
+              <div class="box box1"></div><p>Islam</p> 
+              <br />
+              <div class="box box2"></div><p>Économie</p>
+              <br />
+              <div class="box box3"></div><p>Chômage</p> 
+           
+              
+            </div>
+          </div>
+  </body>
+</html>
